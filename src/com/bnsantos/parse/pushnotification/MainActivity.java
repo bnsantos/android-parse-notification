@@ -3,10 +3,7 @@ package com.bnsantos.parse.pushnotification;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 import com.parse.*;
 
 import java.util.ArrayList;
@@ -24,6 +21,8 @@ public class MainActivity extends Activity {
     private List<CheckBox> mSubscribeProjectsCheckbox;
 
     private Spinner mSpinner;
+
+    private EditText mProjectLocationEditText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +61,14 @@ public class MainActivity extends Activity {
         });
 
         mSpinner = (Spinner) findViewById(R.id.projectSpinner);
+
+        mProjectLocationEditText = (EditText) findViewById(R.id.updateProjectLocationEditText);
+        findViewById(R.id.updateProjectBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateProject();
+            }
+        });
     }
 
     private void fetchFromParseProjectData() {
@@ -183,4 +190,9 @@ public class MainActivity extends Activity {
         }
     }
 
+    private void updateProject() {
+        ParseObject project = mProjects.get(mSpinner.getSelectedItemPosition());
+        project.put(Constants.PROJECT_LOCATION_FIELD, mProjectLocationEditText.getText().toString());
+        project.saveInBackground();
+    }
 }

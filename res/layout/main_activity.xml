@@ -133,12 +133,13 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/projectSpinner"/>
             <EditText
-                    android:id="@+id/updateProjectNameEditText"
+                    android:id="@+id/updateProjectLocationEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Change project location"/>
 
             <Button
+                    android:id="@+id/updateProjectBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
