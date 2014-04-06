@@ -3,7 +3,9 @@ package com.bnsantos.parse.pushnotification;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.parse.*;
 
@@ -20,6 +22,8 @@ public class MainActivity extends Activity {
 
     private List<ParseObject> mProjects;
     private List<CheckBox> mSubscribeProjectsCheckbox;
+
+    private Spinner mSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,10 +60,12 @@ public class MainActivity extends Activity {
                 subscribe();
             }
         });
+
+        mSpinner = (Spinner) findViewById(R.id.projectSpinner);
     }
 
     private void fetchFromParseProjectData() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Project");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.PROJECT_CLASS);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
@@ -68,59 +74,62 @@ public class MainActivity extends Activity {
                 } else {
                     uploadData();
                 }
+                changeCheckboxesName();
+                fillSpinnerData();
+
             }
         });
     }
 
     private void uploadData() {
         ParseObject project1 = new ParseObject("Project");
-        project1.put("name", "Stadium1");
-        project1.put("location", "Belo Horizonte");
+        project1.put(Constants.PROJECT_NAME_FIELD, "Stadium1");
+        project1.put(Constants.PROJECT_LOCATION_FIELD, "Belo Horizonte");
         project1.saveInBackground();
 
         ParseObject project2 = new ParseObject("Project");
-        project2.put("name", "Hospital1");
-        project2.put("location", "Sao Paulo");
+        project2.put(Constants.PROJECT_NAME_FIELD, "Hospital1");
+        project2.put(Constants.PROJECT_LOCATION_FIELD, "Sao Paulo");
         project2.saveInBackground();
 
         ParseObject project3 = new ParseObject("Project");
-        project3.put("name", "OfficeBuilding1");
-        project3.put("location", "Rio de Janeiro");
+        project3.put(Constants.PROJECT_NAME_FIELD, "OfficeBuilding1");
+        project3.put(Constants.PROJECT_LOCATION_FIELD, "Rio de Janeiro");
         project3.saveInBackground();
 
         ParseObject project4 = new ParseObject("Project");
-        project4.put("name", "Road1");
-        project4.put("location", "Brasilia");
+        project4.put(Constants.PROJECT_NAME_FIELD, "Road1");
+        project4.put(Constants.PROJECT_LOCATION_FIELD, "Brasilia");
         project4.saveInBackground();
 
         ParseObject project5 = new ParseObject("Project");
-        project5.put("name", "Mall1");
-        project5.put("location", "Vitoria");
+        project5.put(Constants.PROJECT_NAME_FIELD, "Mall1");
+        project5.put(Constants.PROJECT_LOCATION_FIELD, "Vitoria");
         project5.saveInBackground();
 
         ParseObject project6 = new ParseObject("Project");
-        project6.put("name", "Museum1");
-        project6.put("location", "Porto Alegre");
+        project6.put(Constants.PROJECT_NAME_FIELD, "Museum1");
+        project6.put(Constants.PROJECT_LOCATION_FIELD, "Porto Alegre");
         project6.saveInBackground();
 
         ParseObject project7 = new ParseObject("Project");
-        project7.put("name", "Road2");
-        project7.put("location", "Goias");
+        project7.put(Constants.PROJECT_NAME_FIELD, "Road2");
+        project7.put(Constants.PROJECT_LOCATION_FIELD, "Goias");
         project7.saveInBackground();
 
         ParseObject project8 = new ParseObject("Project");
-        project8.put("name", "OfficeBuilding2");
-        project8.put("location", "Salvador");
+        project8.put(Constants.PROJECT_NAME_FIELD, "OfficeBuilding2");
+        project8.put(Constants.PROJECT_LOCATION_FIELD, "Salvador");
         project8.saveInBackground();
 
         ParseObject project9 = new ParseObject("Project");
-        project9.put("name", "ResidentialBuilding1");
-        project9.put("location", "Coritiba");
+        project9.put(Constants.PROJECT_NAME_FIELD, "ResidentialBuilding1");
+        project9.put(Constants.PROJECT_LOCATION_FIELD, "Coritiba");
         project9.saveInBackground();
 
         ParseObject project10 = new ParseObject("Project");
-        project10.put("name", "Hospital2");
-        project10.put("location", "Manaus");
+        project10.put(Constants.PROJECT_NAME_FIELD, "Hospital2");
+        project10.put(Constants.PROJECT_LOCATION_FIELD, "Manaus");
         project10.saveInBackground();
 
         mProjects = new ArrayList<ParseObject>();
@@ -151,6 +160,27 @@ public class MainActivity extends Activity {
             }
         }
         return projectsId;
+    }
+
+    private void fillSpinnerData() {
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, getProjectNames());
+        mSpinner.setAdapter(spinnerArrayAdapter);
+    }
+
+    private List<String> getProjectNames() {
+        List<String> projectNames = new ArrayList<String>();
+        if (mProjects != null) {
+            for (ParseObject o : mProjects) {
+                projectNames.add(o.getString(Constants.PROJECT_NAME_FIELD));
+            }
+        }
+        return projectNames;
+    }
+
+    private void changeCheckboxesName() {
+        for (int i = 0; i < mSubscribeProjectsCheckbox.size(); i++) {
+            mSubscribeProjectsCheckbox.get(i).setText(mProjects.get(i).getString(Constants.PROJECT_NAME_FIELD));
+        }
     }
 
 }

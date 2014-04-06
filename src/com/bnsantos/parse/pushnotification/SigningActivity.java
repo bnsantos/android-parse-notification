@@ -59,7 +59,7 @@ public class SigningActivity extends Activity {
                 if (user != null) {
 
                     ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-                    installation.put("userId", user.getObjectId());
+                    installation.put(Constants.USER_ID, user.getObjectId());
                     installation.saveInBackground();
 
                     ((Application) getApplication()).setUSer(user);
