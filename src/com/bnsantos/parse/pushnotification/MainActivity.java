@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
 
         ParseObject project9 = new ParseObject("Project");
         project9.put("name", "ResidentialBuilding1");
-        project9.put("lolcation", "Coritiba");
+        project9.put("location", "Coritiba");
         project9.saveInBackground();
 
         ParseObject project10 = new ParseObject("Project");
