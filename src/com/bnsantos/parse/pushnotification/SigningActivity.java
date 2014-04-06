@@ -57,6 +57,11 @@ public class SigningActivity extends Activity {
         ParseUser.logInInBackground(mEmail.getText().toString(), mPassword.getText().toString(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
+
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put("userId", user.getObjectId());
+                    installation.saveInBackground();
+
                     ((Application) getApplication()).setUSer(user);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {

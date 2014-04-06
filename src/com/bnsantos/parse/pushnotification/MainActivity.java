@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -19,18 +20,8 @@ public class MainActivity extends Activity {
     private ParseUser mUser;
     private TextView mUsernameEditText;
 
-    private CheckBox mSubscribeProject1;
-    private CheckBox mSubscribeProject2;
-    private CheckBox mSubscribeProject3;
-    private CheckBox mSubscribeProject4;
-    private CheckBox mSubscribeProject5;
-    private CheckBox mSubscribeProject6;
-    private CheckBox mSubscribeProject7;
-    private CheckBox mSubscribeProject8;
-    private CheckBox mSubscribeProject9;
-    private CheckBox mSubscribeProject10;
-
     private List<ParseObject> mProjects;
+    private List<CheckBox> mSubscribeProjectsCheckbox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,16 +40,17 @@ public class MainActivity extends Activity {
             }
         });
 
-        mSubscribeProject1 = (CheckBox) findViewById(R.id.subscribeCheckbox1);
-        mSubscribeProject2 = (CheckBox) findViewById(R.id.subscribeCheckbox2);
-        mSubscribeProject3 = (CheckBox) findViewById(R.id.subscribeCheckbox3);
-        mSubscribeProject4 = (CheckBox) findViewById(R.id.subscribeCheckbox4);
-        mSubscribeProject5 = (CheckBox) findViewById(R.id.subscribeCheckbox5);
-        mSubscribeProject6 = (CheckBox) findViewById(R.id.subscribeCheckbox6);
-        mSubscribeProject7 = (CheckBox) findViewById(R.id.subscribeCheckbox7);
-        mSubscribeProject8 = (CheckBox) findViewById(R.id.subscribeCheckbox8);
-        mSubscribeProject9 = (CheckBox) findViewById(R.id.subscribeCheckbox9);
-        mSubscribeProject10 = (CheckBox) findViewById(R.id.subscribeCheckbox10);
+        mSubscribeProjectsCheckbox = new ArrayList<CheckBox>();
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox1));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox2));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox3));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox4));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox5));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox6));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox7));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox8));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox9));
+        mSubscribeProjectsCheckbox.add((CheckBox) findViewById(R.id.subscribeCheckbox10));
 
         findViewById(R.id.subscribeBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,5 +125,20 @@ public class MainActivity extends Activity {
     }
 
     private void subscribe() {
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.addAll("projects", getProjectIdsToSubscribe());
+        installation.saveInBackground();
     }
+
+    private List<String> getProjectIdsToSubscribe() {
+        List<String> projectsId = new ArrayList<String>();
+        for (int i = 0; i < mSubscribeProjectsCheckbox.size(); i++) {
+            CheckBox c = mSubscribeProjectsCheckbox.get(i);
+            if (c.isChecked()) {
+                projectsId.add(mProjects.get(i).getObjectId());
+            }
+        }
+        return projectsId;
+    }
+
 }
