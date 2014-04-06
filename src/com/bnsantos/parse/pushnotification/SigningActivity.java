@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
+import com.parse.*;
 
 /**
  * Created by bruno on 4/4/14.
@@ -22,6 +19,8 @@ public class SigningActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+
+        ParseAnalytics.trackAppOpened(getIntent());
 
         mEmail = (EditText) findViewById(R.id.email);
         mPassword = (EditText) findViewById(R.id.password);
@@ -66,9 +65,9 @@ public class SigningActivity extends Activity {
             public void done(ParseException e) {
                 if (e == null) {
                     // Hooray! Let them use the app now.
-                    //TODO
-                } else {
                     login();
+                } else {
+                    //TODO
                 }
             }
         });
