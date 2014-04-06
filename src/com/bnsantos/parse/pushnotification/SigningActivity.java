@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 import com.parse.*;
 
 /**
@@ -14,6 +16,11 @@ public class SigningActivity extends Activity {
 
     private EditText mEmail;
     private EditText mPassword;
+
+    private LinearLayout mLoadingLayout;
+    private LinearLayout mContentLayout;
+
+    private ProgressSpinner mProgress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,24 +45,30 @@ public class SigningActivity extends Activity {
                 signIn();
             }
         });
+
+        mLoadingLayout = (LinearLayout) findViewById(R.id.loginLoadingLayout);
+        mContentLayout = (LinearLayout) findViewById(R.id.loginContentLayout);
+
+        mProgress = new ProgressSpinner(mLoadingLayout, mContentLayout, getResources().getInteger(android.R.integer.config_shortAnimTime));
     }
 
     private void login() {
+        mProgress.show(true);
         ParseUser.logInInBackground(mEmail.getText().toString(), mPassword.getText().toString(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    // Hooray! The user is logged in.
                     ((Application) getApplication()).setUSer(user);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
-                    // Signup failed. Look at the ParseException to see what happened.
-                    //TODO
+                    mProgress.show(false);
+                    Toast.makeText(getApplicationContext(), "Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void signIn() {
+        mProgress.show(true);
         ParseUser user = new ParseUser();
         user.setEmail(mEmail.getText().toString());
         user.setUsername(mEmail.getText().toString());
@@ -64,10 +77,10 @@ public class SigningActivity extends Activity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    // Hooray! Let them use the app now.
                     login();
                 } else {
-                    //TODO
+                    mProgress.show(false);
+                    Toast.makeText(getApplicationContext(), "Error: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
