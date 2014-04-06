@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Upload Data"
+                android:text="Get or Upload Data"
                 android:id="@+id/mainUploadDataBtn" android:layout_gravity="center_horizontal"/>
 
         <LinearLayout

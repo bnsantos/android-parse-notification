@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
+import com.parse.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.mainUploadDataBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadData();
+                fetchFromParseProjectData();
             }
         });
 
@@ -56,6 +54,20 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 subscribe();
+            }
+        });
+    }
+
+    private void fetchFromParseProjectData() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Project");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects != null && parseObjects.size() > 0) {
+                    mProjects = parseObjects;
+                } else {
+                    uploadData();
+                }
             }
         });
     }
