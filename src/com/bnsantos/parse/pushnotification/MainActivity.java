@@ -90,54 +90,68 @@ public class MainActivity extends Activity {
     }
 
     private void uploadData() {
+        ParseACL postACL = new ParseACL(ParseUser.getCurrentUser());
+        postACL.setPublicReadAccess(true);
+        postACL.setPublicWriteAccess(true);
+
         ParseObject project1 = new ParseObject("Project");
         project1.put(Constants.PROJECT_NAME_FIELD, "Stadium1");
         project1.put(Constants.PROJECT_LOCATION_FIELD, "Belo Horizonte");
+        project1.setACL(postACL);
         project1.saveInBackground();
 
         ParseObject project2 = new ParseObject("Project");
         project2.put(Constants.PROJECT_NAME_FIELD, "Hospital1");
         project2.put(Constants.PROJECT_LOCATION_FIELD, "Sao Paulo");
+        project2.setACL(postACL);
         project2.saveInBackground();
 
         ParseObject project3 = new ParseObject("Project");
         project3.put(Constants.PROJECT_NAME_FIELD, "OfficeBuilding1");
         project3.put(Constants.PROJECT_LOCATION_FIELD, "Rio de Janeiro");
+        project3.setACL(postACL);
         project3.saveInBackground();
 
         ParseObject project4 = new ParseObject("Project");
         project4.put(Constants.PROJECT_NAME_FIELD, "Road1");
         project4.put(Constants.PROJECT_LOCATION_FIELD, "Brasilia");
+        project4.setACL(postACL);
         project4.saveInBackground();
 
         ParseObject project5 = new ParseObject("Project");
         project5.put(Constants.PROJECT_NAME_FIELD, "Mall1");
         project5.put(Constants.PROJECT_LOCATION_FIELD, "Vitoria");
+        project5.setACL(postACL);
         project5.saveInBackground();
 
         ParseObject project6 = new ParseObject("Project");
         project6.put(Constants.PROJECT_NAME_FIELD, "Museum1");
         project6.put(Constants.PROJECT_LOCATION_FIELD, "Porto Alegre");
+        project6.setACL(postACL);
         project6.saveInBackground();
 
         ParseObject project7 = new ParseObject("Project");
         project7.put(Constants.PROJECT_NAME_FIELD, "Road2");
         project7.put(Constants.PROJECT_LOCATION_FIELD, "Goias");
+        project7.setACL(postACL);
         project7.saveInBackground();
 
         ParseObject project8 = new ParseObject("Project");
         project8.put(Constants.PROJECT_NAME_FIELD, "OfficeBuilding2");
         project8.put(Constants.PROJECT_LOCATION_FIELD, "Salvador");
+        project8.setACL(postACL);
         project8.saveInBackground();
 
         ParseObject project9 = new ParseObject("Project");
         project9.put(Constants.PROJECT_NAME_FIELD, "ResidentialBuilding1");
         project9.put(Constants.PROJECT_LOCATION_FIELD, "Coritiba");
+        project9.setACL(postACL);
         project9.saveInBackground();
 
         ParseObject project10 = new ParseObject("Project");
         project10.put(Constants.PROJECT_NAME_FIELD, "Hospital2");
         project10.put(Constants.PROJECT_LOCATION_FIELD, "Manaus");
+        project10.setACL(postACL);
         project10.saveInBackground();
 
         mProjects = new ArrayList<ParseObject>();
