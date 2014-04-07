@@ -32,6 +32,26 @@ To run it:
     });
     response.success("Hello world!");
     });
+
+New function called before updating Project table
+
+    Parse.Cloud.beforeSave("Project", function(request, response) {
+    	var currentUser = Parse.User.current();
+    	var project = request.object;
+
+    	var query = new Parse.Query(Parse.Installation);
+    	query.notEqualTo("userId", currentUser.id);
+    	query.equalTo("projects", project.id);
+
+    	Parse.Push.send({
+    		where: query,
+    		data: {
+    			alert: "Project " + project.get("name") + " updated!"
+    		}
+    	});
+
+    	response.success();
+    });
     
 5-Run
 

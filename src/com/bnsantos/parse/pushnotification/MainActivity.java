@@ -7,7 +7,6 @@ import android.widget.*;
 import com.parse.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends Activity {
@@ -212,7 +211,8 @@ public class MainActivity extends Activity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    HashMap<String, Object> params = new HashMap<String, Object>();
+                    //Not calling PushNotifications from mobile
+                    /*HashMap<String, Object> params = new HashMap<String, Object>();
                     params.put(Constants.PUSH_NOTIFICATIONS_PARAM_USER_ID, mUser.getObjectId());
                     params.put(Constants.PUSH_NOTIFICATIONS_PARAM_PROJECTS_ID, project.getObjectId());
 
@@ -221,7 +221,7 @@ public class MainActivity extends Activity {
                         public void done(String s, ParseException e) {
                             //TODO
                         }
-                    });
+                    });*/
                 } else {
                     Toast.makeText(getApplicationContext(), "Error updating project", Toast.LENGTH_SHORT).show();
                 }
