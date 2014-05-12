@@ -27,6 +27,8 @@ public class SigningActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
         ParseAnalytics.trackAppOpened(getIntent());
 
         mEmail = (EditText) findViewById(R.id.email);

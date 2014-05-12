@@ -29,6 +29,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        //getIntent().getExtras().getString("com.parse.Data").toString() get data
         mUsernameEditText = (TextView) findViewById(R.id.mainUsernameEditText);
         mUser = ((Application) getApplication()).getUSer();
 
@@ -96,8 +97,6 @@ public class MainActivity extends Activity {
         ParseObject project1 = new ParseObject("Project");
         project1.put(Constants.PROJECT_NAME_FIELD, "Stadium1");
         project1.put(Constants.PROJECT_LOCATION_FIELD, "Belo Horizonte");
-        project1.setACL(postACL);
-        project1.saveInBackground();
 
         ParseObject project2 = new ParseObject("Project");
         project2.put(Constants.PROJECT_NAME_FIELD, "Hospital1");
