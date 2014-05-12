@@ -27,7 +27,10 @@ To run it:
     Parse.Push.send({
       where: query, // Set our Installation query
       data: {
-        alert: "Project updated!"
+        alert: "Your message here",
+        title: "Your title here",
+        action: "com.bnsantos.parse.pushnotification.UPDATE_PROJECT",
+        data: "Pass your data here"
       }
     });
     response.success("Hello world!");
