@@ -19,8 +19,7 @@ public class Application extends android.app.Application {
         super.onCreate();
 
         // Initialize the Parse SDK.
-        Parse.initialize(this, "C5A1sWZAk6jlpobknbE3z34ICghDpbVQZ5Z0EK4a", "fD61mh7kgiqbt4B5IJ3Yi2Il3PSz3534DHWBV8YS");
-        //Parse.initialize(this, "YOUR_APP_ID", "YOUR_CLIENT_KEY");
+        Parse.initialize(this, "YOUR_APP_ID", "YOUR_CLIENT_KEY");
 
         //ParseUser.enableAutomaticUser();
         ParseACL defaultACL = new ParseACL();
